@@ -28,7 +28,8 @@ class KonfirmasiPembayaranRequest extends FormRequest
           'nama_pemilik'  => 'required',
           'bank_tujuan'   => 'required',
           'tgl_transfer'  => 'required',
-          'bukti_bayar'   => 'required|image|mimes:jpeg,png,jpg|max:2048'
+          'bukti_bayar'   => 'required|image|mimes:jpeg,png,jpg|max:2048',
+          'foto_selfie'   => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ];
     }
 
@@ -43,6 +44,10 @@ class KonfirmasiPembayaranRequest extends FormRequest
         'bukti_bayar.image'     => 'File harus gambar.',
         'bukti_bayar.mimes'     => 'File hanya mendukung .jpeg, .png, .jpg,',
         'bukti_bayar.max'       => 'Ukuran File tidak boleh lebih dari 2MB',
+        'foto_selfie.required'  => 'File tidak boleh kosong.',
+        'foto_selfie.image'     => 'File harus gambar.',
+        'foto_selfie.mimes'     => 'File hanya mendukung .jpeg, .png, .jpg,',
+        'foto_selfie.max'       => 'Ukuran File tidak boleh lebih dari 2MB',
         'book.required'         => 'Status Booking harus dipilih.',
       ];
     }
