@@ -83,6 +83,11 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ (request()->is('')) ? 'active' : '' }}">
+                <a href="/pemilik/users"><i class="feather icon-users"></i><span class="menu-title" data-i18n="Users">Users</span>
+                </a>
+            </li>
+
 
         </ul>
     </div>

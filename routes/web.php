@@ -18,7 +18,7 @@ Route::get('select-district','Owner\KamarController@selectDistrict'); // Select 
 
 Auth::routes();
 
-///// FRONTEND \\\\\
+///// FRONTEND \\\
 // Homepage
 
 Route::get('/','Frontend\FrontendsController@homepage'); // homepage
@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
   Route::get('rekening/update','Owner\BankController@rekeningUpdate'); // Rekening Update
   Route::get('is-active-bank','Owner\BankController@IsActiveBank'); // Aktifkan dan Non Aktifkan Bank
 
-  ////// ADMIN \\\\\\\
+  ////// ADMIN \\\\
   Route::prefix('/admin')->middleware('role:Admin')->group(function () {
     Route::resources([
         '/admin-kamar' => 'Admin\AdminController'
@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::get('status-kamar','Admin\AdminController@statusKamar');
   });
 
-  ////// PEMILIK \\\\\\
+  ////// PEMILIK \\\\
   Route::prefix('pemilik')->middleware('role:Pemilik')->group(function () {
 
     Route::resource('kamar','Owner\KamarController'); //Data Kamar
@@ -73,11 +73,12 @@ Route::middleware('auth')->group(function () {
     Route::put('payment-confirm/{key}','Owner\BookListController@proses_confirm_payment'); // Proses Confirm Payment
     Route::get('reject-payment','Owner\BookListController@reject_confirm_payment'); // Reject Payment
     Route::get('penghuni','Owner\PenghuniController@penghuni'); // Penghuni
+    Route::get('users','Owner\UsersController@user'); // Users
     Route::get('done-sewa','Owner\BookListController@doneSewa'); //Done Sewa
   });
 
 
-  ///// USER \\\\\
+  ///// USER \\\
   Route::prefix('/user')->middleware('role:Pencari')->group(function () {
     Route::post('/transaction-room/{id}','User\TransactionController@store')->name('sewa.store'); // Proses save Room
     Route::get('room/{key}','User\TransactionController@detail_payment'); // Detail payment
@@ -88,7 +89,7 @@ Route::middleware('auth')->group(function () {
     Route::post('review-proses/{key}','User\MyRoomsController@reviewProses'); // Review Kamar
   });
 
-  ////// GLOBAL ROUTE \\\\\\
+  ////// GLOBAL ROUTE \\\\
   Route::get('profile','GlobalController@profile');
   Route::put('profile/{id}','GlobalController@profileUpdate');
 });
