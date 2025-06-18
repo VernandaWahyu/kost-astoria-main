@@ -135,11 +135,14 @@ class TransactionController extends Controller
 
         if ($konfirmasi) {
 
-          $foto = $request->file('bukti_bayar');
-          $bukti_bayar = time()."_".$foto->getClientOriginalName();
+          $foto_bukti = $request->file('bukti_bayar');
+          $foto_selfie = $request->file('foto_selfie');
+          $bukti_bayar = time()."_".$foto_bukti->getClientOriginalName();
+          $selfie = time()."_".$foto_selfie->getClientOriginalName();
           // isi dengan nama folder tempat kemana file diupload
-          $tujuan_upload = 'public/images/bukti_bayar';
-          $foto->storeAs($tujuan_upload,$bukti_bayar);
+        
+          $foto_bukti->storeAs('public/images/bukti_bayar',$bukti_bayar);
+          $foto_selfie->storeAs('public/images/bukti_selfie',$selfie);
 
           $payment = payment::where('transaction_id',$id)->first();
           $payment->type_transfer     = 'BANK';
@@ -150,6 +153,7 @@ class TransactionController extends Controller
           $payment->jumlah_bayar      = $konfirmasi->harga_total;
           $payment->tgl_transfer      = $request->tgl_transfer;
           $payment->bukti_bayar       = $bukti_bayar;
+          $payment->foto_selfie       = $selfie;
           $payment->save();
         }
 

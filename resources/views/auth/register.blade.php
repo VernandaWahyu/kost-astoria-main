@@ -13,7 +13,7 @@
         </div>
         <div class="card-content mb-2">
             <div class="card-body pt-1">
-                <form action="{{route('register')}}" method="POST">
+                <form action="{{route('register')}}" method="POST" enctype="multipart/form-data">
                   @csrf
                     <fieldset class="form-label-group form-group position-relative has-icon-left">
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" id="name" placeholder="Masukan Nama Kamu ...">
@@ -38,6 +38,41 @@
                             <i class="feather icon-user"></i>
                         </div>
                     </fieldset>
+                    <fieldset class="form-label-group form-group position-relative has-icon-left">
+                      <input type="text" name="no_wa" class="form-control @error('no_wa') is-invalid @enderror" value="{{old('no_wa')}}" id="no_wa" placeholder="Masukan Nomor WA Kamu ...">
+                      @error('no_wa')
+                          <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                          </span>
+                        @enderror
+                        <div class="form-control-position">
+                            <i class="feather icon-phone"></i>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-group">
+                      <div class="controls">
+                        <label for="foto">Foto Profile</label>
+                        <input type="file" name="foto" id="foto" class="form-control @error('foto') is-invalid @enderror">
+                        @error('foto')
+                          <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                          </span>
+                        @enderror
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="controls">
+                        <label for="foto_ktp">Foto KTP</label>
+                        <input type="file" name="foto_ktp" id="foto_ktp" class="form-control @error('foto_ktp') is-invalid @enderror">
+                        @error('foto_ktp')
+                          <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                          </span>
+                        @enderror
+                      </div>
+                    </div>
 
                     <fieldset class="form-label-group form-group position-relative has-icon-left">
                         <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
@@ -98,6 +133,7 @@
                     <a href="{{route('login')}}" class="btn btn-outline-primary float-left btn-inline">Login</a>
                     <button type="submit" class="btn btn-primary float-right btn-inline">Register</button>
                 </form>
+                <!-- Remove the duplicate photo upload section that was outside the form -->
             </div>
         </div>
         <div class="login-footer">

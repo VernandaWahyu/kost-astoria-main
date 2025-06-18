@@ -56,11 +56,19 @@
             {{$confirm->payment->bank_tujuan}} <small><em>(Bank Tujuan)</em></small> <br>
             {{$confirm->payment->tgl_transfer}} <small><em>(Tanggal Transfer)</em></small>
           </span>
-          <span>
-            {{-- <img src=" {{asset('storage/images/bukti_bayar/' .$confirm->payment->bukti_bayar)}} " style="max-height: 60px; max-width:200px"> --}}
-            <a href=" {{asset('storage/images/bukti_bayar/' .$confirm->payment->bukti_bayar)}}" target="_blank" class="btn btn-info btn-sm">
-              <i class="feather icon-file"></i> File Bukti Bayar</a>
-          </span>
+          <div class="d-flex flex-column gap-3">
+
+            <div>
+              {{-- <img src=" {{asset('storage/images/bukti_bayar/' .$confirm->payment->bukti_bayar)}} " style="max-height: 60px; max-width:200px"> --}}
+              <a href=" {{asset('storage/images/bukti_bayar/' .$confirm->payment->bukti_bayar)}}" target="_blank" class="btn btn-info btn-sm">
+                <i class="feather icon-file"></i> File Bukti Bayar</a>
+              </div>
+              <div>
+                <a href=" {{asset('storage/images/bukti_selfie/' .$confirm->payment->foto_selfie)}}" target="_blank" class="btn btn-info btn-sm">
+                  <i class="feather icon-file"></i> File Bukti Selfie</a>
+                  
+                </div>
+              </div>
         </div>
         <hr>
         <div class="d-flex justify-content-between">

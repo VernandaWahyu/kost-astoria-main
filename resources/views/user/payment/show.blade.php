@@ -120,6 +120,17 @@
           </div>
 
           <div class="form-group">
+            <label for="foto_selfie">Foto Selfie</label>
+            <input type="file" class="form-control @error('foto_selfie') is-invalid @enderror" name="foto_selfie">
+            <small class="text-muted">Upload foto selfie Anda untuk verifikasi</small>
+            @error('foto_selfie')
+              <div class="invalid-feedback">
+                <strong>{{ $message }}</strong>
+              </div>
+            @enderror
+          </div>
+
+          <div class="form-group">
             <button type="submit" class="btn btn-primary mr-sm-1 mb-1 mb-sm-0">Konfirmasi</button>
           </div>
         </form>

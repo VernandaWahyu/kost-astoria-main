@@ -33,6 +33,8 @@
                       <th class="text-nowrap">No Telp</th>
                       <th class="text-nowrap">Keterangan</th>
                       <th class="text-nowrap">Status Transaksi</th>
+                      <th class="text-nowrap">Bukti bayar</th>
+                      <th class="text-nowrap">Foto selfie</th>
                       <th class="text-nowrap">Action</th>
                     </tr>
                   </thead>
@@ -49,6 +51,16 @@
                         <td>{{$bookings->user->no_wa ?? 0}}</td>
                         <td>{{$bookings->lama_sewa}} Bulan</td>
                         <td>{{$bookings->payment->status}}</td>
+                        <td>
+                          @if ($bookings->payment->bukti_bayar)
+                          <a href="{{url('pemilik/room', $bookings->key)}}">Lihat</a>
+                          @endif
+                        </td>
+                        <td>
+                          @if ($bookings->payment->foto_selfie)
+                          <a href="{{url('pemilik/room', $bookings->key)}}">Lihat</a>
+                          @endif
+                        </td>
                         <td>
                           @if ($bookings->status == 'Pending')
                             @if ($bookings->payment->jumlah_bayar == null || $bookings->payment->tgl_transfer == null)
@@ -74,6 +86,7 @@
                             <span class="badge badge-danger">Reject</span>
                           @endif
                         </td>
+
                       </tr>
                     @php
                       $no++;

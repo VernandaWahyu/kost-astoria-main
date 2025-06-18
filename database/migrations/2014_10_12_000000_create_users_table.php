@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->enum('role',['Pemilik','Pencari']);
             $table->string('credit')->default(20);
             $table->text('foto')->nullable();
+            $table->text('foto_ktp')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
