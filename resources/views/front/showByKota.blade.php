@@ -20,25 +20,7 @@
     </div>
   </section>
 
-  <div class="mb-2" style="font-weight: bold">
-    @if ($kota == 'DKI JAKARTA')
-      Kost Jakarta
-    @elseif($kota == 'DI YOGYAKARTA')
-      Kost Jogja
-    @elseif($kota == 'KOTA SURABAYA')
-      Kost Surabaya
-    @elseif($kota == 'KABUPATEN BANDUNG')
-      Kost Bandung
-    @elseif($kota == 'KABUPATEN MALANG')
-      Kost Malang
-    @elseif($kota == 'KABUPATEN SEMARANG')
-      Kost Semarang
-    @elseif($kota == 'KOTA MEDAN')
-      Kost Medan
-    @else
-    Kota tidak ditemukan.
-    @endif
-  </div>
+
 
   <div class="row match-height">
     @forelse ($kamar as $kamars)
@@ -50,12 +32,12 @@
           </a>
           <div class="card-body">
             <a href="{{url('room', $kamars->slug)}}">
-              <h5 style="min-height: 40px">{{$kamars->nama_kamar}} {{ucfirst(strtolower($kamars->regencies->name))}}</h5>
+              <h5 style="min-height: 40px">{{$kamars->nama_kamar}}</h5>
               <div class="d-flex-justify-content-between">
                 <a href="" class="btn gradient-light-primary btn-sm">{{$kamars->jenis_kamar}}</a>
                 <a href="#" class="btn btn-outline-{{$kamars->sisa_kamar > 5 ? 'primary' : 'danger'}} btn-sm {{$kamars->sisa_kamar > 5 ? 'primary' : 'danger'}}">Tersisa {{$kamars->sisa_kamar}} kamar</a>
               </div>
-              <p class="card-text mt-1 mb-0"><i class="feather icon-map-pin"></i> {{$kamars->provinsi->name}}</p>
+              
               <span class="card-text" style="color: rgb(96, 93, 93);text-decoration: line-through">
                 @if ($kamars->promo != null && $kamars->promo->status == 1)
                     {{rupiah($kamars->harga_kamar)}}

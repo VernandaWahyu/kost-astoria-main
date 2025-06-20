@@ -15,6 +15,6 @@ Selamat Datang di Kost Astoria
 <br><br><br>
 @include('front.cardContent')
 <br><br><br>
-@include('front.byKota')
+{{-- @include('front.byKota') --}}
 
 @endsection

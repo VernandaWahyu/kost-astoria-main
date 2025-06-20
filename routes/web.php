@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('select-regency','Owner\KamarController@selectRegency'); // Select Regency
-Route::get('select-district','Owner\KamarController@selectDistrict'); // Select District
-
 Auth::routes();
 
 ///// FRONTEND \\\

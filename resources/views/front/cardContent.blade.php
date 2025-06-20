@@ -17,7 +17,7 @@
           </a>
           <div class="card-body">
             <a href="{{url('room', $kamars->slug)}}">
-              <h5 style="min-height: 40px">{{$kamars->nama_kamar}} {{ucfirst(strtolower($kamars->regencies->name))}}</h5>
+              <h5 style="min-height: 40px">{{$kamars->nama_kamar}}</h5>
               <div class="d-flex-justify-content-between">
                 <a href="" class="btn gradient-light-primary btn-sm">{{$kamars->jenis_kamar}}</a>
                 <a href="#" class="btn btn-outline-{{$kamars->sisa_kamar > 5 ? 'primary' : 'danger'}} btn-sm {{$kamars->sisa_kamar > 5 ? 'primary' : 'danger'}}">
@@ -28,7 +28,7 @@
                     @endif
                 </a>
               </div>
-              <p class="card-text mt-1 mb-0"><i class="feather icon-map-pin"></i> {{$kamars->provinsi->name}}</p>
+              <p class="card-text mt-1 mb-0"><i class="feather icon-map-pin"></i> {{$kamars->alamat}}</p>
               <span class="card-text" style="color: rgb(96, 93, 93);text-decoration: line-through">
                 @if ($kamars->promo != null && $kamars->promo->status == 1 && $kamars->promo->end_date_promo >= Carbon\carbon::now()->format('d F, Y'))
                     {{rupiah($kamars->harga_kamar)}}

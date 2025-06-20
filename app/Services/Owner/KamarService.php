@@ -8,7 +8,7 @@ use App\Models\Alamat;
 use App\Models\fkamar;
 use App\Models\fparkir;
 use App\Models\fbersama;
-use App\Models\Province;
+
 use App\Models\fotokamar;
 use App\Models\fkamar_mandi;
 use Illuminate\Support\Str;
@@ -34,13 +34,12 @@ class KamarService {
   public function create()
   {
     try {
-      $provinsi = Province::select('id','name')->get();
       // Cek data rekening
       if (Auth::user()->dataRekening == null || Auth::user()->no_wa == 0) {
         Session::flash('error','Data Akun Belum Lengkap !');
         return redirect('/home');
       }
-      return view('pemilik.kamar.create', compact('provinsi'));
+      return view('pemilik.kamar.create');
     } catch (ErrorException $e) {
       throw new ErrorException($e->getMessage());
     }
@@ -77,9 +76,6 @@ class KamarService {
       $kamar->kategori        = $params->kategori;
       $kamar->book            = $params->book;
       $kamar->bg_foto         = $nama_foto;
-      $kamar->province_id     = $params->province_id;
-      $kamar->regency_id      = $params->regency_id;
-      $kamar->district_id     = $params->district_id;
       $kamar->save();
 
       if ($kamar) {
@@ -141,10 +137,7 @@ class KamarService {
             $foto->save();
           }
 
-          $alamat = Alamat::create([
-            'kamar_id'  => $kamar->id,
-            'alamat'    => $params->alamat
-          ]);
+          // Skip creating alamat record
       }
 
       DB::commit();
@@ -172,8 +165,7 @@ class KamarService {
   {
     try {
       $edit = kamar::where('slug', $slug)->first();
-      $provinsi = Province::select('id','name')->get();
-      return view('pemilik.kamar.edit', compact('edit','provinsi'));
+      return view('pemilik.kamar.edit', compact('edit'));
     } catch (ErrorException $e) {
       throw new ErrorException($e->getMessage());
     }
