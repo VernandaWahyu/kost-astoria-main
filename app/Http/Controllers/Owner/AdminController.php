@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Owner;
 
 use ErrorException;
 use App\Models\kamar;
@@ -20,7 +20,7 @@ class AdminController extends Controller
     {
         try {
             $kamar = kamar::all();
-            return view('admin.kamar.index', compact('kamar'));
+            return view('pemilik.manage-kamar.kamar.index', compact('kamar'));
         } catch (ErrorException $e) {
             throw new ErrorException($e->getMessage());
         }
@@ -98,8 +98,6 @@ class AdminController extends Controller
         $kamar->update([
             'status'    => $kamar->status == 1 ? 0 : 1
         ]);
-
-        Session::flash('success','Kamar Berhasil Disetujui.');
-        return $kamar;
+        return response()->json(['success' => true]);
     }
 }
