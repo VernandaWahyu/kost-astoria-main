@@ -16,7 +16,7 @@ class CreateAlamatsTable extends Migration
         Schema::create('alamats', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('kamar_id');
-            $table->string('alamat');
+            $table->string('alamat')->default('Jl. madiun');
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
             $table->timestamps();

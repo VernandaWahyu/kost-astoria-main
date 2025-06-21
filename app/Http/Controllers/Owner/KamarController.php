@@ -9,7 +9,7 @@ use App\Http\Requests\KamarRequest;
 use App\Http\Controllers\Controller;
 use App\Services\Owner\KamarService;
 use Illuminate\Support\Facades\Session;
-use App\Models\{Province,regency,District};
+
 
 class KamarController extends Controller
 {
@@ -125,19 +125,19 @@ class KamarController extends Controller
         //
     }
 
-    // Select Regency
-    public function selectRegency(Request $request)
-    {
-      $regency = regency::where('province_id',$request->province_id)->get();
-      return \response()->json($regency);
-    }
+    // // Select Regency
+    // public function selectRegency(Request $request)
+    // {
+    //   $regency = regency::where('province_id',$request->province_id)->get();
+    //   return \response()->json($regency);
+    // }
 
-     // Select District
-    public function selectDistrict(Request $request)
-    {
-      $district = District::where('regency_id',$request->regency_id)->get();
-      return \response()->json($district);
-    }
+    //  // Select District
+    // public function selectDistrict(Request $request)
+    // {
+    //   $district = District::where('regency_id',$request->regency_id)->get();
+    //   return \response()->json($district);
+    // }
 
     // Del Fasilitas Kamar
     public function delFasilitasKamarService($id)

@@ -66,6 +66,9 @@
                     <li class="{{Request::is('pemilik/kamar/create') ? 'active' : ''}}">
                         <a href="{{route('kamar.create')}}"><i></i><span class="menu-item" data-i18n="Tambah">Tambah Kamar</span></a>
                     </li>
+                    <li class="{{Request::is('pemilik/manage-kamar') ? 'active' : ''}}">
+                        <a href="{{route('manage-kamar.index')}}"><i></i><span class="menu-item" data-i18n="Setujui Kamar">Setujui Kamar</span></a>
+                    </li>
                 </ul>
             </li>
 
@@ -84,11 +87,9 @@
             </li>
 
             <li class="nav-item {{ (request()->is('')) ? 'active' : '' }}">
-                <a href="/pemilik/users"><i class="feather icon-users"></i><span class="menu-title" data-i18n="Users">Users</span>
+                <a href="/pemilik/users"><i class="feather icon-user"></i><span class="menu-title" data-i18n="Users">Users</span>
                 </a>
             </li>
-
-
         </ul>
     </div>
 </div>

@@ -1,44 +1,6 @@
 <?php
-use App\Models\{Province,Regency,District,User,payment,Transaction,Promo};
+use App\Models\{User,payment,Transaction,Promo};
 
-// Ambil nama provinsi by id
-if (! function_exists('getNameProvinsi'))
-{
-    function getNameProvinsi($id=0)
-    {
-        $model = new Province;
-        $data  = $model::where('id',$id)->first();
-        $name = !empty($data) ? $data->name : 'Not Found';
-        $name = !empty($name) ? $name : 'Not Found';
-        return $name;
-    }
-}
-
-// Ambil nama kota by id
-if (! function_exists('getNameRegency'))
-{
-    function getNameRegency($id=0)
-    {
-        $model = new Regency;
-        $data  = $model::where('id',$id)->first();
-        $name = !empty($data) ? $data->name : 'Not Found';
-        $name = !empty($name) ? $name : 'Not Found';
-        return $name;
-    }
-}
-
-// Ambil nama district by id
-if (! function_exists('getNameDistrict'))
-{
-    function getNameDistrict($id=0)
-    {
-        $model = new District;
-        $data  = $model::where('id',$id)->first();
-        $name = !empty($data) ? $data->name : 'Not Found';
-        $name = !empty($name) ? $name : 'Not Found';
-        return $name;
-    }
-}
 
 // Format Rupiah
 if (! function_exists('rupiah'))

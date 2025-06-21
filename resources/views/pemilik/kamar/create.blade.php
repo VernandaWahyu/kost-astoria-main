@@ -17,7 +17,7 @@
                   <div class="col-sm-12">
                       <label class="col-form-label">Nama Kamar</label>
                       <input type="text" class="form-control @error('nama_kamar') is-invalid @enderror" name="nama_kamar" placeholder="Nama Kamar" value="{{old('nama_kamar')}}" autocomplete="off">
-                      <small style="color: red">*Tanpa nama provinsi/kota/kabupaten</small>
+                      <small style="color: red">*Isi dengan jenis/nomor kamar</small>
                       @error('nama_kamar')
                         <div class="invalid-feedback">
                           <strong>{{ $message }}</strong>
@@ -117,39 +117,6 @@
                   </div>
 
                   <div class="col-sm-4">
-                      <label class="col-form-label">Provinsi</label>
-                      <select name="province_id" class="form-control select2 @error('province_id') is-invalid @enderror" id="province">
-                        <option value="">-- Pilih Provinsi --</option>
-                          @foreach ($provinsi as $item)
-                              <option value="{{$item->id}}" >{{$item->name}}</option>
-                          @endforeach
-                      </select>
-                      @error('province_id')
-                        <div class="invalid-feedback">
-                          <strong>{{ $message }}</strong>
-                        </div>
-                      @enderror
-                  </div>
-                  <div class="col-sm-4">
-                      <label class="col-form-label">Regency</label>
-                      <select name="regency_id" class="form-control select2  @error('regency_id') is-invalid @enderror" id="regency"></select>
-                      @error('regency_id')
-                        <div class="invalid-feedback">
-                          <strong>{{ $message }}</strong>
-                        </div>
-                      @enderror
-                  </div>
-                  <div class="col-sm-4">
-                      <label class="col-form-label">District</label>
-                      <select name="district_id" class="form-control select2  @error('district_id') is-invalid @enderror" id="district"></select>
-                      @error('district_id')
-                        <div class="invalid-feedback">
-                          <strong>{{ $message }}</strong>
-                        </div>
-                      @enderror
-                  </div>
-
-                  <div class="col-sm-4">
                       <label class="col-form-label">Biaya Deposit</label>
                       <input type="number" name="deposit" class="form-control @error('deposit') is-invalid @enderror" value="{{old('deposit')}}" placeholder="Biaya Deposit">
                       @error('deposit')
@@ -169,15 +136,7 @@
                       @enderror
                   </div>
 
-                  <div class="col-12">
-                    <label class="col-form-label">Alamat Lengkap Kos</label>
-                    <textarea name="alamat" class="form-control  @error('alamat') is-invalid @enderror" id="alamat" rows="4" placeholder="Tulis lengkap alamat kos disini"></textarea>
-                    @error('alamat')
-                      <div class="invalid-feedback">
-                        <strong>{{ $message }}</strong>
-                      </div>
-                      @enderror
-                  </div>
+               
                 </div>
 
                 <div class="form-group ">
@@ -363,54 +322,6 @@
   <script src="{{asset('ctrl/kamar/create.js')}}"></script>
 
   <script type="text/javascript">
-  $('#province').change(function(){
-    var provinceID = $(this).val();
-    if(provinceID){
-      $.ajax({
-        type:"GET",
-        url:"{{url('select-regency')}}?province_id="+provinceID,
-        success:function(res){
-          console.log(res);
-        if(res){
-          $("#regency").empty();
-          $("#regency").append('<option>Select Regency</option>');
-          $.each(res,function(key,value){
-            $("#regency").append('<option value="'+value.id+'">'+value.name+'</option>');
-          });
 
-        }else{
-          $("#regency").empty();
-        }
-        }
-      });
-    }else{
-      $("#regency").empty();
-      $("#district").empty();
-    }
-    });
-    $('#regency').on('change',function(){
-    var regencyID = $(this).val();
-    if(regencyID){
-      $.ajax({
-        type:"GET",
-        url:"{{url('select-district')}}?regency_id="+regencyID,
-        success:function(res){
-        if(res){
-          $("#district").empty();
-          $("#district").append('<option>Select District</option>');
-          $.each(res,function(key,value){
-            $("#district").append('<option value="'+value.id+'">'+value.name+'</option>');
-          });
-
-        }else{
-          $("#district").empty();
-        }
-        }
-      });
-    }else{
-      $("#district").empty();
-    }
-
-    });
   </script>
 @endsection

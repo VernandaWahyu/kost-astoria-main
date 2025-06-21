@@ -13,10 +13,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            IndoRegionProvinceSeeder::class,
-            IndoRegionRegencySeeder::class,
-            IndoRegionDistrictSeeder::class,
-            IndoRegionVillageSeeder::class,
             RoleSeeder::class,
             IndoBankSeeder::class,
             AddRoleAdmin::class

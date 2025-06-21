@@ -11,14 +11,7 @@
     <div class="card-body" style="padding: 1%">
       <form action="{{url('filter-kamar')}}" method="GET">
         <div class="row">
-          <div class="col-sm-3 mt-1">
-            <select name="nama_provinsi" id="" class="form-control" placeholder="Semua Kota">
-              <option value="all">Semua Kota</option>
-              @foreach ($provinsi as $province)
-                <option value="{{$province->provinsi->name}}" {{$province->provinsi->name == $select['name'] ? 'selected' : ''}} >{{$province->provinsi->name}}</option>
-              @endforeach
-            </select>
-          </div>
+
 
           <div class="col-sm-2 mt-1">
             <select name="jenis_kamar" id="" class="form-control">
@@ -62,7 +55,7 @@
           </a>
           <div class="card-body">
             <a href="{{url('room', $kamars->slug)}}">
-              <h5 style="min-height: 40px">{{$kamars->nama_kamar}} {{ucfirst(strtolower($kamars->regencies->name))}}</h5>
+              <h5 style="min-height: 40px">{{$kamars->nama_kamar}}</h5>
               <div class="d-flex-justify-content-between">
                 <a href="" class="btn gradient-light-primary btn-sm">{{$kamars->jenis_kamar}}</a>
                 <a href="#" class="btn btn-outline-{{$kamars->sisa_kamar > 5 ? 'primary' : 'danger'}} btn-sm {{$kamars->sisa_kamar > 5 ? 'primary' : 'danger'}}">
@@ -73,7 +66,7 @@
                     @endif
                 </a>
               </div>
-              <p class="card-text mt-1 mb-0"><i class="feather icon-map-pin"></i> {{$kamars->provinsi->name}}</p>
+              
               <span class="card-text" style="color: rgb(96, 93, 93);text-decoration: line-through">
                 @if ($kamars->promo != null && $kamars->promo->status == 1 && $kamars->promo->end_date_promo >= Carbon\carbon::now()->format('d F, Y'))
                     {{rupiah($kamars->harga_kamar)}}

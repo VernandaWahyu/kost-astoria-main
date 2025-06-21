@@ -18,15 +18,6 @@ class FrontendsController extends Controller
         $cari = $request->cari;
         $kamar = kamar::with('promo')
             ->when(isset($cari), function ($a) use ($cari) {
-                $a->whereHas('provinsi', function ($q) use ($cari) {
-                    $q->where('name', 'like', "%" . $cari . "%");
-                })
-                    ->orwhereHas('regencies', function ($q) use ($cari) {
-                        $q->where('name', 'like', "%" . $cari . "%");
-                    })
-                    ->orwhereHas('district', function ($q) use ($cari) {
-                        $q->where('name', 'like', "%" . $cari . "%");
-                    });
                 $a->orwhere('nama_kamar', 'like', "%" . $cari . "%");
             })
             ->where('status', 1)
@@ -42,16 +33,14 @@ class FrontendsController extends Controller
     // Show Kamar
     public function showkamar($slug)
     {
-        $kamar = kamar::with('province')
-            ->with('promo', function ($q) {
+        $kamar = kamar::with(['promo' => function ($q) {
                 $q->where('status', '1');
-            })
+            }, 'alamat'])
             ->where('slug', $slug)->first();
         $fav = SimpanKamar::where('kamar_id', $kamar->id)->where('user_id', Auth::id())->first();
         $relatedKos = kamar::with(['promo' => function ($a) {
             $a->where('end_date_promo', '>=', carbon::now()->format('d F, Y'));
-        }])->whereNotIn('slug', [$slug])
-            ->where('province_id', [$kamar->province_id])
+        }, 'alamat'])->whereNotIn('slug', [$slug])
             ->where('status', 1)
             ->where('is_active', 1)
             ->limit(4)->get();
@@ -67,34 +56,20 @@ class FrontendsController extends Controller
             $a->where('end_date_promo', '>=', carbon::now()->format('d F, Y'));
         }])
             ->when(isset($cari), function ($a) use ($cari) {
-                $a->whereHas('provinsi', function ($q) use ($cari) {
-                    $q->where('name', 'like', "%" . $cari . "%");
-                })
-                    ->orwhereHas('regencies', function ($q) use ($cari) {
-                        $q->where('name', 'like', "%" . $cari . "%");
-                    })
-                    ->orwhereHas('district', function ($q) use ($cari) {
-                        $q->where('name', 'like', "%" . $cari . "%");
+                $a->where('nama_kamar', 'like', "%" . $cari . "%")
+                    ->orWhereHas('favorite', function ($q) use ($cari) {
+                        $q->where('user_id', 'like', "%" . $cari . "%")
+                            ->where('user_id', Auth::id());
                     });
-
-                $a->orwhere('nama_kamar', 'like', "%" . $cari . "%");
-                $a->orwhereHas('favorite', function ($q) use ($cari) {
-                    $q->where('user_id', 'like', "%" . $cari . "%")
-                        ->where('user_id', Auth::id());
-                });
             })
             ->where('status', 1)
             ->where('is_active', 1)
             ->orderBy('created_at', 'DESC')
             ->paginate(12);
 
-        $provinsi = Kamar::with([
-            'provinsi',
-            'promo' => function ($a) {
+        $provinsi = Kamar::with(['promo' => function ($a) {
                 $a->where('end_date_promo', '>=', carbon::now()->format('d F, Y'));
-            }
-        ])->select('province_id')
-            ->groupby('province_id')
+            }])
             ->where('status', 1)
             ->where('is_active', 1)
             ->get();
@@ -108,67 +83,23 @@ class FrontendsController extends Controller
     // Filter kamar
     public function filterKamar(Request $request)
     {
-        if ($request->nama_provinsi != 'all' && $request->jenis_kamar != 'all') {
-            $allKamar = kamar::with([
-                'promo' => function ($a) {
-                    $a->where('end_date_promo', '>=', carbon::now()->format('d F, Y'));
-                }
-            ])->whereHas('provinsi', function ($q) use ($request) {
-                $q->where('name', $request->nama_provinsi);
-            })
-                ->where('jenis_kamar', $request->jenis_kamar)
-                ->where('status', 1)
-                ->where('is_active', 1)
-                ->paginate(12);
-        } elseif ($request->nama_provinsi == 'all' && $request->jenis_kamar != 'all') {
-            $allKamar = kamar::with([
-                'promo' => function ($a) {
-                    $a->where('end_date_promo', '>=', carbon::now()->format('d F, Y'));
-                }
-            ])->where('jenis_kamar', $request->jenis_kamar)
-                ->where('status', 1)
-                ->where('is_active', 1)
-                ->paginate(12);
-        } elseif ($request->nama_provinsi != 'all' && $request->jenis_kamar == 'all') {
-            $allKamar = kamar::with([
-                'promo' => function ($a) {
-                    $a->where('end_date_promo', '>=', carbon::now()->format('d F, Y'));
-                }
-            ])->whereHas('provinsi', function ($q) use ($request) {
-                $q->where('name', $request->nama_provinsi);
-            })
-                ->where('status', 1)
-                ->where('is_active', 1)
-                ->orderBy('created_at', 'DESC')
-                ->paginate(12);
-        } else {
-            $allKamar = kamar::with([
-                'promo' => function ($a) {
-                    $a->where('end_date_promo', '>=', carbon::now()->format('d F, Y'));
-                }
-            ])->where('status', 1)
-                ->where('is_active', 1)
-                ->orderBy('created_at', 'DESC')
-                ->paginate(12);
-        }
+        $allKamar = kamar::with([
+            'promo' => function ($a) {
+                $a->where('end_date_promo', '>=', carbon::now()->format('d F, Y'));
+            }
+        ])
+        ->when($request->jenis_kamar != 'all', function($query) use ($request) {
+            $query->where('jenis_kamar', $request->jenis_kamar);
+        })
+        ->where('status', 1)
+        ->where('is_active', 1)
+        ->orderBy('created_at', 'DESC')
+        ->paginate(12);
 
 
         $select = [];
         $select['jenis_kamar'] = $request->jenis_kamar;
-        $select['name']        = $request->nama_provinsi;
-
-        // select provinsi
-        $provinsi = Kamar::with([
-            'provinsi',
-            'promo' => function ($a) {
-                $a->where('end_date_promo', '>=', carbon::now()->format('d F, Y'));
-            }
-        ])->select('province_id')
-            ->where('status', 1)
-            ->where('is_active', 1)
-            ->groupby('province_id')
-            ->get();
-        return view('front.allCardContent', \compact('allKamar', 'select', 'provinsi'));
+        return view('front.allCardContent', \compact('allKamar', 'select'));
     }
 
     // Show by kota
@@ -176,15 +107,8 @@ class FrontendsController extends Controller
     {
         $kota = $request->kota;
         $kamar = kamar::with('promo')
-            ->when(isset($kota), function ($a) {
-                $a->where('status', 1)->where('is_active', 1);
-            })
-            ->whereHas('provinsi', function ($q) use ($kota) {
-                $q->where('name', $kota);
-            })
-            ->orwhereHas('regencies', function ($q) use ($kota) {
-                $q->where('name', $kota);
-            })
+            ->where('status', 1)
+            ->where('is_active', 1)
             ->orderBy('created_at', 'DESC')
             ->paginate(12);
         return view('front.showByKota', \compact('kamar', 'kota'));

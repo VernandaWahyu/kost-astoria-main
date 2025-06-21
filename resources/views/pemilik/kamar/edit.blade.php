@@ -85,34 +85,6 @@
                     </div>
 
                     <div class="col-sm-3">
-                        <label class="col-form-label">Provinsi</label>
-                        <select name="province_id" class="form-control" id="select2" disabled>
-                            <option value="">-- Pilih Provinsi --</option>
-                                @foreach ($provinsi as $item)
-                                    <option value="{{$item->id}}" {{$edit->province_id == $item->id ? 'selected' : ''}} >{{$item->name}}</option>
-                                @endforeach
-                        </select>
-                    </div>
-                    <div class="col-sm-3">
-                        <label class="col-form-label">Regency</label>
-                        <input type="text" class="form-control" disabled value="{{$edit->regencies->name}}">
-                        @error('regency_id')
-                          <div class="invalid-feedback">
-                            <strong>{{ $message }}</strong>
-                          </div>
-                        @enderror
-                    </div>
-                    <div class="col-sm-3">
-                        <label class="col-form-label">District</label>
-                        <input type="text" class="form-control" disabled value="{{$edit->district->name}}">
-                        @error('district_id')
-                          <div class="invalid-feedback">
-                            <strong>{{ $message }}</strong>
-                          </div>
-                        @enderror
-                    </div>
-
-                    <div class="col-sm-3">
                         <label class="col-form-label">Biaya Deposit</label>
                         <input type="number" name="deposit" class="form-control @error('deposit') is-invalid @enderror" value="{{$edit->deposit}}" placeholder="Biaya Deposit">
                         @error('deposit')
@@ -132,15 +104,7 @@
                         @enderror
                     </div>
 
-                    <div class="col-12">
-                      <label class="col-form-label">Alamat Lengkap Kos</label>
-                      <textarea name="alamat" class="form-control" id="alamat" rows="4" placeholder="Tulis lengkap alamat kos disini"> {{$edit->alamat->alamat ?? '-'}} </textarea>
-                      @error('alamat')
-                        <div class="invalid-feedback">
-                          <strong>{{ $message }}</strong>
-                        </div>
-                        @enderror
-                    </div>
+                
                 </div>
 
                 <div class="form-group ">

@@ -18,7 +18,7 @@
 @endsection
 
 @section('title')
-  {{$kamar->nama_kamar}} {{ucfirst(strtolower($kamar->provinsi->name))}}
+  {{$kamar->nama_kamar}}
 @endsection
 @section('content')
   @if($message = Session::get('error'))
@@ -31,9 +31,7 @@
   <div class="col-12">
     <h4 class="card-title">
       <a href="/" style="font-size: 15px;"><i class="feather icon-home"></i> Home ></a>
-      <a href="" style="font-size: 15px;">Kost {{ucwords(strtolower($kamar->provinsi->name))}} ></a>
-      <a href="" style="font-size: 15px;">Kost {{ucwords(strtolower($kamar->regencies->name))}} ></a>
-      <a href="" style="font-size: 15px; color:black">{{$kamar->nama_kamar}} {{ucwords(strtolower($kamar->district->name))}} {{ucwords(strtolower($kamar->regencies->name))}} </a>
+      <a href="" style="font-size: 15px; color:black">{{$kamar->nama_kamar}}</a>
     </h4>
   </div>
   <div class="col-xl-8 col-lg-12">
@@ -92,7 +90,7 @@
   </div>
     <div class="card">
       <div class="card-body">
-        <h3>{{$kamar->nama_kamar}} {{ucwords(strtolower($kamar->regencies->name))}} {{ucwords(strtolower($kamar->provinsi->name))}}</h3>
+        <h3>{{$kamar->nama_kamar}}</h3>
         <button class="btn btn-outline-black btn-sm"><span style="font-size: 12px; font-weight:bold;">Kos {{$kamar->jenis_kamar}}</span></button>
         <div class="row">
           <div class="col-md-6 mt-1">
@@ -128,10 +126,10 @@
                         <i class="feather icon-share-2"></i> Bagikan
                     </button>
                     <div class="dropdown-menu" aria-labelledby="share">
-                        <a class="dropdown-item" target="_blank" href="{{ Share::currentPage($kamar->nama_kamar)->facebook()->getRawLinks() }}"> <i class="fa fa-facebook"></i> Facebook</a>
-                        <a class="dropdown-item" target="_blank" href="{{ Share::currentPage($kamar->nama_kamar)->twitter()->getRawLinks() }}"><i class="fa fa-twitter"></i> Twitter</a>
-                        <a class="dropdown-item" target="_blank" href="{{ Share::currentPage($kamar->nama_kamar)->telegram()->getRawLinks() }}"><i class="fa fa-telegram"></i> Telegram</a>
-                        <a class="dropdown-item" target="_blank" href="{{ Share::currentPage($kamar->nama_kamar)->whatsapp()->getRawLinks() }}"><i class="fa fa-whatsapp"></i> WhatsApp</a>
+                        <a class="dropdown-item" target="_blank" href="{{ Share::page(url('room', $kamar->slug))->facebook()->getRawLinks() }}"> <i class="fa fa-facebook"></i> Facebook</a>
+                        <a class="dropdown-item" target="_blank" href="{{ Share::page(url('room', $kamar->slug))->twitter()->getRawLinks() }}"><i class="fa fa-twitter"></i> Twitter</a>
+                        <a class="dropdown-item" target="_blank" href="{{ Share::page(url('room', $kamar->slug))->telegram()->getRawLinks() }}"><i class="fa fa-telegram"></i> Telegram</a>
+                        <a class="dropdown-item" target="_blank" href="{{ Share::page(url('room', $kamar->slug))->whatsapp()->getRawLinks() }}"><i class="fa fa-whatsapp"></i> WhatsApp</a>
                     </div>
                 </div>
               </div>
@@ -200,8 +198,7 @@
         {{$kamar->desc ?? '-'}}
 
         <h5 class="mt-1" style="font-weight: bold">Lokasi</h5>
-        {{$kamar->alamat->alamat ?? '-'}} <br>
-        <small style="text-decoration:underline"> {{ucfirst(strtolower($kamar->district->name))}}, {{ucfirst(strtolower($kamar->regencies->name))}}, {{ucfirst(strtolower($kamar->provinsi->name))}} </small>
+        {{$kamar->alamat ?? '-'}}
         <hr>
           <h3 style="font-weight: bold">Reviews</h3> <br>
             @foreach ($kamar->reviews as $review)

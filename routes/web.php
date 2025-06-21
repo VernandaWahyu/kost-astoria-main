@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('select-regency','Owner\KamarController@selectRegency'); // Select Regency
-Route::get('select-district','Owner\KamarController@selectDistrict'); // Select District
-
 Auth::routes();
 
 ///// FRONTEND \\\
@@ -38,16 +35,16 @@ Route::middleware('auth')->group(function () {
 
   ////// ADMIN \\\\
   Route::prefix('/admin')->middleware('role:Admin')->group(function () {
-    Route::resources([
-        '/admin-kamar' => 'Admin\AdminController'
-    ]);
-
-    Route::get('status-kamar','Admin\AdminController@statusKamar');
+    
   });
-
+  
   ////// PEMILIK \\\\
   Route::prefix('pemilik')->middleware('role:Pemilik')->group(function () {
-
+    
+    Route::resources([
+        '/manage-kamar' => 'Owner\AdminController'
+    ]);
+    Route::get('status-kamar','Owner\AdminController@statusKamar');
     Route::resource('kamar','Owner\KamarController'); //Data Kamar
     Route::get('is-aktif-kamar','Owner\KamarController@statusKamar');
     Route::prefix('delete')->group(function(){

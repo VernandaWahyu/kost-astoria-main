@@ -10,7 +10,7 @@
                         </p>
                         <form action="{{url('')}}" method="GET">
                             <fieldset class="form-group position-relative has-icon-left mb-0">
-                                <input type="text" name="cari" class="form-control form-control-lg" id="searchbar" placeholder="Masukan Nama Kos lokasi/kota/provinsi...">
+                                <input type="text" name="cari" class="form-control form-control-lg" id="searchbar" placeholder="Masukan Nama Kos...">
                                 <div class="form-control-position">
                                     <i class="feather icon-search px-1"></i>
                                 </div>
