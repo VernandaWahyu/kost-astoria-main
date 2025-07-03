@@ -72,6 +72,12 @@ Route::middleware('auth')->group(function () {
     Route::get('penghuni','Owner\PenghuniController@penghuni'); // Penghuni
     Route::get('users','Owner\UsersController@user'); // Users
     Route::get('done-sewa','Owner\BookListController@doneSewa'); //Done Sewa
+    Route::get('delete-booking','Owner\BookListController@deleteBooking'); // Delete Booking
+  //  Route::post('delete-kamar','Owner\KamarController@deleteKamar')->name('kamar.delete');
+Route::post('delete-kamar','Owner\KamarController@deleteKamar');
+// Add this inside the pemilik middleware group
+Route::post('delete-user', 'Owner\UsersController@deleteUser');
+
   });
 
 

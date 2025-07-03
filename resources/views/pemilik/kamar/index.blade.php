@@ -1,3 +1,6 @@
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 @extends('layouts.backend.app')
 @section('title','Data Kosan')
 @section('content')
@@ -57,6 +60,8 @@
                         @if ($item->status == 0)
                             <span class="btn btn-primary btn-sm text-white">Review</span>
                         @endif
+                          <a href="#" class="btn btn-danger btn-sm delete-kamar" data-id="{{ $item->id }}">Delete</a>
+
                       </td>
                     </tr>
                     @endforeach
@@ -80,5 +85,24 @@
         location.reload()
     });
     });
+
+    // Delete Kamar
+// Delete Kamar
+$(document).on('click', '.delete-kamar', function (e) {
+  e.preventDefault();
+  var id = $(this).data('id');
+
+  if (confirm('Apakah Anda yakin ingin menghapus kamar ini?')) {
+    $.post('/pemilik/delete-kamar', {
+      _token: $('meta[name=csrf-token]').attr('content'),
+      id: id
+    }, function (_resp) {
+      window.location.href = "/pemilik/kamar";
+    });
+  }
+});
+
+
+
 </script>
 @endsection

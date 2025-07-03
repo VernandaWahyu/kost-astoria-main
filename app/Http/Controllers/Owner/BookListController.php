@@ -69,4 +69,15 @@ class BookListController extends Controller
       }
     }
 
+  public function deleteBooking(Request $request)
+{
+  try {
+    $result = $this->booking->deleteBooking($request->id);
+    return $result;
+  } catch (ErrorException $e) {
+    throw new ErrorException($e->getMessage());
+  }
+}
+
+
 }

@@ -35,6 +35,7 @@
                       <th class="text-nowrap">Status Transaksi</th>
                       <th class="text-nowrap">Bukti bayar</th>
                       <th class="text-nowrap">Foto selfie</th>
+                      <th class="text-nowrap">Status</th>
                       <th class="text-nowrap">Action</th>
                     </tr>
                   </thead>
@@ -86,6 +87,12 @@
                             <span class="badge badge-danger">Reject</span>
                           @endif
                         </td>
+                        <td>
+                          <button id="delete" data-id-delete="{{$bookings->id}}" class="btn btn-danger btn-sm mr-sm-1 mb-1 mb-sm-0">
+                           Delete
+                          </button>
+                      
+                          </td>
 
                       </tr>
                     @php

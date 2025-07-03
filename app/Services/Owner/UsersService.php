@@ -67,6 +67,18 @@ class UsersService {
             return redirect('/home');
         }
     }
+    // Add this method at the end of the class
+    public function deleteUser($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            Session::flash('success', 'User berhasil dihapus');
+            return redirect()->back();
+        } catch (ErrorException $e) {
+            throw new ErrorException($e->getMessage());
+        }
+    }
 }
 
 // edit

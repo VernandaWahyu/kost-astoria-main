@@ -180,5 +180,16 @@ class KamarController extends Controller
     {
         return $this->kamar->isActive($params);
     }
+
+public function deleteKamar(Request $request)
+{
+  try {
+    $result = $this->kamar->deleteKamar($request->id);
+    return $result;
+  } catch (ErrorException $e) {
+    throw new ErrorException($e->getMessage());
+  }
+}
+
 }
 

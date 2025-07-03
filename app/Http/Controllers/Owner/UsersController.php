@@ -29,4 +29,14 @@ class UsersController extends Controller
           throw new ErrorException($e->getMessage());
         }
     }
+
+    // Add this method to the class
+    public function deleteUser(Request $request)
+    {
+        try {
+            return $this->user->deleteUser($request->id);
+        } catch (ErrorException $e) {
+            throw new ErrorException($e->getMessage());
+        }
+    }
 }

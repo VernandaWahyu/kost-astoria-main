@@ -21,6 +21,7 @@
                                     <th>Credit</th>
                                     <th>Foto</th>
                                     <th>KTP</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,6 +50,12 @@
                                             <span class="badge badge-light-secondary">No KTP</span>
                                         @endif
                                     </td>
+
+                                <td>
+    <a href="#" class="btn btn-danger btn-sm delete-user" data-id="{{ $user->id }}">Delete</a>
+</td>
+
+                                    
                                 </tr>
                                 @empty
                                 <tr>
@@ -63,6 +70,35 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+$(document).on('click', '.delete-user', function(e) {
+    e.preventDefault();
+    console.log('halo');
+    var id = $(this).data('id');
+    
+    if(confirm('Are you sure you want to delete this user?')) {
+        $.ajax({
+            url: '/pemilik/delete-user',
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: id
+            },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(error) {
+                alert('Error deleting user');
+            }
+        });
+    }
+});
+
+
+</script>
 @endsection
 
 @push('styles')

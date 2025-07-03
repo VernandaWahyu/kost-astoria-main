@@ -110,4 +110,28 @@ class BookingListService {
       throw new ErrorException($e->getMessage());
     }
   }
+
+  // Delete Booking
+  public function deleteBooking($params)
+  {
+    try {
+      DB::beginTransaction();
+      $booking = Transaction::findOrFail($params);
+      
+      if ($booking->status == 'Proses') {
+        $kamar = kamar::where('id', $booking->kamar_id)
+        ->update([
+          'sisa_kamar' => DB::raw('sisa_kamar + 1')
+        ]);
+      }
+      
+      $booking->delete();
+      DB::commit();
+      Session::flash('success', 'Booking berhasil dihapus');
+      return redirect('/pemilik/booking-list');
+    } catch (ErrorException $e) {
+      DB::rollback();
+      throw new ErrorException($e->getMessage());
+    }
+  }
 }

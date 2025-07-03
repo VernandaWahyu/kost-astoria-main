@@ -336,4 +336,55 @@ class KamarService {
     Session::flash('success','Update Kamar Sukses.');
     return $kamar;
   }
+
+   // Delete kamar
+public function deleteKamar($id)
+{
+  try {
+    DB::beginTransaction();
+
+    $kamar = Kamar::findOrFail($id);
+
+    // Hapus relasi-relasi terkait
+    alamat::where('kamar_id', $id)->delete();
+    area::where('kamar_id', $id)->delete();
+    fkamar::where('kamar_id', $id)->delete();
+    fkamar_mandi::where('kamar_id', $id)->delete();
+    fbersama::where('kamar_id', $id)->delete();
+    fparkir::where('kamar_id', $id)->delete();
+    // simpan_kamar::where('kamar_id', $id)->delete();
+    // review::where('kamar_id', $id)->delete();
+    // transaction::where('kamar_id', $id)->delete();
+    // payment::where('kamar_id', $id)->delete();
+    // promo::where('kamar_id', $id)->delete();
+
+    // Hapus foto dari filesystem + database
+    $fotos = fotokamar::where('kamar_id', $id)->get();
+    foreach ($fotos as $foto) {
+      $path = public_path('storage/images/foto_kamar/' . $foto->foto_kamar);
+      if (File::exists($path)) {
+        File::delete($path);
+      }
+      $foto->delete();
+    }
+
+    // Hapus foto background kamar
+    $bgPath = public_path('storage/images/bg_foto/' . $kamar->bg_foto);
+    if (File::exists($bgPath)) {
+      File::delete($bgPath);
+    }
+
+    // Hapus kamar
+    $kamar->delete();
+
+    DB::commit();
+    Session::flash('success', 'Data kamar berhasil dihapus');
+    return redirect('/pemilik/kamar');
+
+  } catch (\Exception $e) {
+    DB::rollback();
+    throw new ErrorException($e->getMessage());
+  }
+}
+
 }
